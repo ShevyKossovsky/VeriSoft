@@ -5,28 +5,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DestinationFlyweightFactory {
-    private Map<String, Destination> destinations = new HashMap<>();
+        private Map<String, Destination> vacations = new HashMap<>();
 
-    public boolean isAvailable(String flightDetails, String hotelDetails, Date date) {
-        String key = flightDetails + hotelDetails;
-        if (destinations.containsKey(key)) {
-            return destinations.get(key).isAvailable(date);
+        // Method to get or create a vacation object for a destination
+        public Destination getDestination(String destinationName, String flightDetails, String hotelDetails) {
+            Destination destination = vacations.get(destinationName);
+            if (destination == null) {
+                destination = new ConcreteDestination(destinationName, flightDetails, hotelDetails);
+                vacations.put(destinationName, destination);
+                System.out.println("Creating new destination: " + destinationName);
+            } else {
+                System.out.println("Reusing existing destination: " + destinationName);
+            }
+
+            return destination;
         }
-        return false;
-    }
-
-    public Destination getDestination(String flightDetails, String hotelDetails, Date availableDate) {
-        String key = flightDetails + hotelDetails;
-
-        if (!destinations.containsKey(key)) {
-            destinations.put(key, new ConcreteDestination(flightDetails, hotelDetails, availableDate));
-        }
-        return destinations.get(key);
-    }
-
-    public Map<String, Destination> getDestinations() {
-        return destinations;
-    }
 
 
 }

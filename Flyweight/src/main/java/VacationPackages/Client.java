@@ -4,29 +4,18 @@ import java.util.Date;
 
 public class Client {
 
-    private DestinationFlyweightFactory factory;
+    private String customerName;
 
-    public Client(DestinationFlyweightFactory factory) {
-        this.factory = factory;
+    public Client(String customerName) {
+        this.customerName = customerName;
     }
 
-    public void orderVacationPackage(String flightDetails, String hotelDetails, Date date) {
-        if (factory.isAvailable(flightDetails, hotelDetails, date)) {
-            Destination destination = factory.getDestination(flightDetails, hotelDetails, date);
-            destination.bookFlight();
-            destination.bookAccommodation();
-        } else {
-            System.out.println("Vacation package not available for the selected date.");
-        }
-    }
-
-    public void cancelVacationPackage(String flightDetails, String hotelDetails, Date date) {
-
-        String key = flightDetails + hotelDetails;
-        if (factory.getDestinations().containsKey(key)) {
-            factory.getDestinations().remove(key);
-            System.out.println("Vacation has been successfully canceled!");
-        }
-
+    // Method to book a vacation package
+    public void bookVacationPackage(DestinationFlyweightFactory factory, String destinationName,
+                                    String flightDetails, String hotelDetails) {
+        Destination destination = factory.getDestination(destinationName, flightDetails, hotelDetails);
+        System.out.println(customerName + " is booking a vacation package to " + destinationName);
+        destination.bookFlight(flightDetails);
+        destination.bookAccommodation(hotelDetails);
     }
 }

@@ -3,28 +3,28 @@ package VacationPackages;
 import java.util.Date;
 
 public class ConcreteDestination implements Destination {
-
+    private String destinationName;
     private String flightDetails;
     private String hotelDetails;
-    private Date availableDate;
 
-    public ConcreteDestination(String flightDetails, String hotelDetails, Date availableDate) {
+    // Constructor to initialize the destination's unique details
+    public ConcreteDestination(String destinationName, String flightDetails, String hotelDetails) {
+        this.destinationName = destinationName;
         this.flightDetails = flightDetails;
         this.hotelDetails = hotelDetails;
-        this.availableDate = availableDate;
-    }
-
-
-    @Override
-    public void bookFlight() {
-        System.out.println("Booking flight" + flightDetails);
     }
 
     @Override
-    public void bookAccommodation() {
-        System.out.println("Booking accommodation" + hotelDetails);
+    public void bookFlight(String flightDetails) {
+        System.out.println("Booking flight to " + destinationName + " with details: " + flightDetails);
     }
-    public boolean isAvailable(Date date) {
-        return availableDate.equals(date);
+
+    @Override
+    public void bookAccommodation(String hotelDetails) {
+        System.out.println("Booking accommodation at " + destinationName + " with details: " + hotelDetails);
+    }
+
+    public String getDestinationName() {
+        return destinationName;
     }
 }

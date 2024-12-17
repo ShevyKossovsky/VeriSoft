@@ -5,12 +5,22 @@ import java.util.Date;
 public class Main {
 
     public static void main(String[] args) {
-        DestinationFlyweightFactory factory = new DestinationFlyweightFactory();
+            // Create the flyweight factory
+            DestinationFlyweightFactory flyweightFactory = new DestinationFlyweightFactory();
 
-        Client client = new Client(factory);
+            // Create a few customers
+            Client customer1 = new Client("Alice");
+            Client customer2 = new Client("Bob");
 
-        Date vacationDate = new Date(2024, 11, 25);  // 25 לדצמבר 2024
+            // Customer 1 books vacation packages to different destinations
+            customer1.bookVacationPackage(flyweightFactory, "Paris", "Flight to Paris", "Hotel in Paris");
+            customer1.bookVacationPackage(flyweightFactory, "Tokyo", "Flight to Tokyo", "Hotel in Tokyo");
 
-        client.orderVacationPackage("Flight to Paris", "Hotel in Paris", vacationDate);
+            // Customer 2 books vacation packages (Paris already exists in the flyweight factory)
+            customer2.bookVacationPackage(flyweightFactory, "Paris", "Flight to Paris", "Hotel in Paris");
+            customer2.bookVacationPackage(flyweightFactory, "Tokyo", "Flight to Tokyo", "Hotel in Tokyo");
+
+            // Output shows that Paris is shared between customers
+
     }
 }
